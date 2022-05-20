@@ -21,8 +21,8 @@ var DefaultOptions = Options{
 }
 
 //WithQueryTimeout 设置最大过期时间,单位ms
-//@params timeout time.Duration 请求etcd的最大超时,单位ms
-func WithQueryTimeout(timeout time.Duration) optparams.Option[Options] {
+//@params timeout int 请求etcd的最大超时,单位ms
+func WithQueryTimeout(timeout int) optparams.Option[Options] {
 	return optparams.NewFuncOption(func(o *Options) {
 		o.QueryTimeout = time.Duration(timeout) * time.Millisecond
 	})
