@@ -1,3 +1,7 @@
+# v0.0.4
+
++ etcdhelper拼写错误
+
 # v0.0.3
 
 + 移除workspace相关内容
