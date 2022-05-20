@@ -1,1 +1,1 @@
-package etcehelper
+package etcdhelper
