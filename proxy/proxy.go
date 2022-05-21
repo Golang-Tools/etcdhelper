@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"context"
+	"strings"
 
 	log "github.com/Golang-Tools/loggerhelper/v2"
 	"github.com/Golang-Tools/optparams"
@@ -71,8 +72,12 @@ func (proxy *EtcdProxy) SetConnect(cli *clientv3.Client) error {
 }
 
 //Init 从配置条件初始化代理对象
-func (proxy *EtcdProxy) Init(opts ...optparams.Option[Options]) error {
+//@params endpoints string 设置etcd连接的地址端点,以`,`分隔
+//@params opts ...optparams.Option[Options]
+func (proxy *EtcdProxy) Init(endpoints string, opts ...optparams.Option[Options]) error {
 	optparams.GetOption(&proxy.Opt, opts...)
+	eps := strings.Split(endpoints, ",")
+	proxy.Opt.Config.Endpoints = eps
 	cli, err := clientv3.New(*proxy.Opt.Config)
 	if err != nil {
 		return err
@@ -82,11 +87,12 @@ func (proxy *EtcdProxy) Init(opts ...optparams.Option[Options]) error {
 
 // Regist 注册回调函数,在init执行后执行回调函数
 //如果对象已经设置了被代理客户端则无法再注册回调函数
-func (proxy *EtcdProxy) Regist(cb Callback) error {
+//@params cb ...Callback 回调函数
+func (proxy *EtcdProxy) Regist(cb ...Callback) error {
 	if proxy.IsOk() {
 		return ErrProxyAllreadySettedClient
 	}
-	proxy.callBacks = append(proxy.callBacks, cb)
+	proxy.callBacks = append(proxy.callBacks, cb...)
 	return nil
 }
 

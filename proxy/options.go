@@ -18,6 +18,7 @@ type Options struct {
 
 var DefaultOptions = Options{
 	QueryTimeout: time.Duration(50) * time.Millisecond,
+	Config:       &clientv3.Config{},
 }
 
 //WithQueryTimeout 设置最大过期时间,单位ms
@@ -40,14 +41,6 @@ func WithParallelCallback() optparams.Option[Options] {
 func WithEtcdConfig(conf *clientv3.Config) optparams.Option[Options] {
 	return optparams.NewFuncOption(func(o *Options) {
 		o.Config = conf
-	})
-}
-
-//WithEndpoints 设置etcd连接的地址端点
-//@params endpoints ...string 地址端点
-func WithEndpoints(endpoints ...string) optparams.Option[clientv3.Config] {
-	return optparams.NewFuncOption(func(o *clientv3.Config) {
-		o.Endpoints = endpoints
 	})
 }
 

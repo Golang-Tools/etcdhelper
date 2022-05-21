@@ -9,7 +9,7 @@ import (
 )
 
 func TestEtcdProxy_Get_Set(t *testing.T) {
-	Default.Init(UseEtcdOpts(WithEndpoints("localhost:12379")))
+	Default.Init("localhost:12379")
 	defer Default.Close()
 
 	ctx, cancel := Default.NewCtx()
@@ -27,7 +27,7 @@ func TestEtcdProxy_Get_Set(t *testing.T) {
 }
 
 func TestEtcdProxy_Get_Set_With_Prefix(t *testing.T) {
-	Default.Init(UseEtcdOpts(WithEndpoints("localhost:12379")))
+	Default.Init("localhost:12379")
 	defer Default.Close()
 
 	ctx, cancel := Default.NewCtx()
@@ -53,7 +53,7 @@ func TestEtcdProxy_Get_Set_With_Prefix(t *testing.T) {
 }
 
 func TestEtcdProxy_Get_Empty(t *testing.T) {
-	Default.Init(UseEtcdOpts(WithEndpoints("localhost:12379")))
+	Default.Init("localhost:12379")
 	defer Default.Close()
 
 	ctx, cancel := Default.NewCtx()
